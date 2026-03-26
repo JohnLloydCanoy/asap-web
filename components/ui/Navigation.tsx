@@ -86,16 +86,15 @@ const AsapNavigation: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
                 
                 {/* --- Logo --- */}
-                <div className="flex-shrink-0">
-                    <Link href="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 p-1 flex items-center justify-center text-white font-black text-xl shadow-inner">
-                            A
-                        </div>
-                        <span className="text-2xl font-extrabold text-gray-950 tracking-tighter">
-                            ASAP
-                        </span>
-                    </Link>
-                </div>
+                                {/* Full name on large screens */}
+                <span className="hidden xl:block text-xl font-extrabold text-gray-950 tracking-tight whitespace-nowrap">
+                    Automated Social <br></br>Analytics Platform
+                </span>
+
+                {/* Acronym on smaller screens to save space */}
+                <span className="xl:hidden text-2xl font-extrabold text-gray-950 tracking-tighter">
+                    ASAP
+                </span>
 
                 {/* --- Main Contextual Links (Desktop) --- */}
                 <div className="hidden lg:flex items-center gap-8 pl-10">
