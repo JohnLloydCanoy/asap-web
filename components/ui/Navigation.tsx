@@ -22,7 +22,7 @@ type CtaItem = {
     mobileClasses: string;
 };
 
-// ---THE DATA STRUCTURES ---
+// --- THE DATA STRUCTURES ---
 const NAV_LINKS: NavItem[] = [
     { label: "Insights AI", href: "/insights-ai" },
     {
@@ -56,7 +56,6 @@ const NAV_LINKS: NavItem[] = [
     { label: "Enterprise", href: "/enterprise" },
 ];
 
-// Loopable array for Action Buttons
 const CTA_LINKS: CtaItem[] = [
     { 
         label: "Request Demo", 
@@ -78,7 +77,7 @@ const CTA_LINKS: CtaItem[] = [
     },
 ];
 
-// ---  UI COMPONENT ---
+// --- UI COMPONENT ---
 const AsapNavigation: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -114,25 +113,27 @@ const AsapNavigation: React.FC = () => {
                                 )}
                             </Link>
 
-                            {/* Dropdown Menu Renderer */}
+                            {/* Desktop Dropdown Menu Renderer (GAP FIXED) */}
                             {item.dropdown && (
-                                <div className="absolute left-0 mt-0 pt-10 top-full w-48 bg-white border border-gray-100 rounded-lg shadow-xl py-2 opacity-0 group-hover:opacity-100 transition-opacity invisible group-hover:visible z-40">
-                                    {item.dropdown.map((dropItem, dropIndex) => (
-                                        <Link 
-                                            key={dropIndex} 
-                                            href={dropItem.href} 
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
-                                        >
-                                            {dropItem.label}
-                                        </Link>
-                                    ))}
+                                <div className="absolute left-0 top-full pt-3 w-48 opacity-0 group-hover:opacity-100 transition-opacity invisible group-hover:visible z-40">
+                                    <div className="bg-white border border-gray-100 rounded-xl shadow-xl py-1.5 overflow-hidden">
+                                        {item.dropdown.map((dropItem, dropIndex) => (
+                                            <Link 
+                                                key={dropIndex} 
+                                                href={dropItem.href} 
+                                                className="block px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-blue-700 transition-colors"
+                                            >
+                                                {dropItem.label}
+                                            </Link>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
                         </div>
                     ))}
                 </div>
 
-                {/* --- Right Side CTAs (Desktop) - Now Looped! --- */}
+                {/* --- Right Side CTAs (Desktop) --- */}
                 <div className="hidden lg:flex items-center gap-4">
                     {CTA_LINKS.map((cta, index) => (
                         <Link key={index} href={cta.href} className={cta.desktopClasses}>
@@ -195,7 +196,7 @@ const AsapNavigation: React.FC = () => {
                             </div>
                         ))}
 
-                        {/* Mobile CTAs - Now Looped! */}
+                        {/* Mobile CTAs */}
                         <div className="border-t border-gray-100 pt-4 mt-2 flex flex-col space-y-3">
                             {CTA_LINKS.map((cta, index) => (
                                 <Link 
