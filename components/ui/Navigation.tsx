@@ -87,12 +87,12 @@ const AsapNavigation: React.FC = () => {
                 
                 {/* --- Logo --- */}
                                 {/* Full name on large screens */}
-                <span className="hidden xl:block text-xl font-extrabold text-gray-950 tracking-tight whitespace-nowrap">
+                <span className="hidden xl:block text-xl font-extrabold text-[#1f2937] tracking-tight whitespace-nowrap">
                     Automated Social <br></br>Analytics Platform
                 </span>
 
                 {/* Acronym on smaller screens to save space */}
-                <span className="xl:hidden text-2xl font-extrabold text-gray-950 tracking-tighter">
+                <span className="xl:hidden text-2xl font-extrabold text-[#1f2937] tracking-tighter">
                     ASAP
                 </span>
 
