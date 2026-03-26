@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-// --- 1. TYPE DEFINITIONS ---
+// --- TYPE DEFINITIONS ---
 type DropdownItem = {
     label: string;
     href: string;
@@ -15,7 +15,14 @@ type NavItem = {
     dropdown?: DropdownItem[];
 };
 
-// --- 2. THE DATA STRUCTURE ---
+type CtaItem = {
+    label: string;
+    href: string;
+    desktopClasses: string; 
+    mobileClasses: string;
+};
+
+// ---THE DATA STRUCTURES ---
 const NAV_LINKS: NavItem[] = [
     { label: "Insights AI", href: "/insights-ai" },
     {
@@ -49,9 +56,30 @@ const NAV_LINKS: NavItem[] = [
     { label: "Enterprise", href: "/enterprise" },
 ];
 
-// --- 3. THE UI COMPONENT ---
+// Loopable array for Action Buttons
+const CTA_LINKS: CtaItem[] = [
+    { 
+        label: "Request Demo", 
+        href: "/request-demo", 
+        desktopClasses: "text-blue-700 hover:text-blue-800 font-semibold text-sm",
+        mobileClasses: "text-center w-full px-6 py-3 text-sm font-semibold text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100"
+    },
+    { 
+        label: "Login", 
+        href: "/login", 
+        desktopClasses: "px-6 py-2.5 text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors",
+        mobileClasses: "text-center w-full px-6 py-3 text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100"
+    },
+    { 
+        label: "Sign Up", 
+        href: "/signup", 
+        desktopClasses: "px-6 py-2.5 text-sm font-semibold text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-colors shadow-sm",
+        mobileClasses: "text-center w-full px-6 py-3 text-sm font-semibold text-white bg-blue-700 rounded-lg hover:bg-blue-800 shadow-sm"
+    },
+];
+
+// ---  UI COMPONENT ---
 const AsapNavigation: React.FC = () => {
-    // State to handle the mobile menu toggle
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
@@ -70,7 +98,7 @@ const AsapNavigation: React.FC = () => {
                     </Link>
                 </div>
 
-                {/* --- Main Contextual Links (Desktop Only) --- */}
+                {/* --- Main Contextual Links (Desktop) --- */}
                 <div className="hidden lg:flex items-center gap-8 pl-10">
                     {NAV_LINKS.map((item, index) => (
                         <div key={index} className={item.dropdown ? "relative group" : ""}>
@@ -86,7 +114,7 @@ const AsapNavigation: React.FC = () => {
                                 )}
                             </Link>
 
-                            {/* Desktop Dropdown Menu Renderer */}
+                            {/* Dropdown Menu Renderer */}
                             {item.dropdown && (
                                 <div className="absolute left-0 mt-0 pt-10 top-full w-48 bg-white border border-gray-100 rounded-lg shadow-xl py-2 opacity-0 group-hover:opacity-100 transition-opacity invisible group-hover:visible z-40">
                                     {item.dropdown.map((dropItem, dropIndex) => (
@@ -104,17 +132,13 @@ const AsapNavigation: React.FC = () => {
                     ))}
                 </div>
 
-                {/* --- Right Side CTAs (Desktop Only) --- */}
+                {/* --- Right Side CTAs (Desktop) - Now Looped! --- */}
                 <div className="hidden lg:flex items-center gap-4">
-                    <Link href="/request-demo" className="text-blue-700 hover:text-blue-800 font-semibold text-sm">
-                        Request Demo
-                    </Link>
-                    <Link href="/login" className="px-6 py-2.5 text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors">
-                        Login
-                    </Link>
-                    <Link href="/signup" className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-700 rounded-lg hover:bg-blue-800 transition-colors shadow-sm">
-                        Sign Up
-                    </Link>
+                    {CTA_LINKS.map((cta, index) => (
+                        <Link key={index} href={cta.href} className={cta.desktopClasses}>
+                            {cta.label}
+                        </Link>
+                    ))}
                 </div>
 
                 {/* --- Mobile Hamburger Button --- */}
@@ -125,12 +149,10 @@ const AsapNavigation: React.FC = () => {
                         aria-label="Toggle menu"
                     >
                         {isMobileMenuOpen ? (
-                            // 'X' Close Icon
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         ) : (
-                            // Hamburger Menu Icon
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
@@ -143,18 +165,19 @@ const AsapNavigation: React.FC = () => {
             {isMobileMenuOpen && (
                 <div className="lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 shadow-lg">
                     <div className="flex flex-col space-y-2">
-                        {/* Map through links for mobile */}
+                        
+                        {/* Map through main links for mobile */}
                         {NAV_LINKS.map((item, index) => (
                             <div key={index} className="flex flex-col">
                                 <Link 
                                     href={item.href} 
                                     className="block px-3 py-2 text-base font-medium text-gray-900 rounded-md hover:bg-gray-50"
-                                    onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
+                                    onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {item.label}
                                 </Link>
                                 
-                                {/* Render nested dropdown links slightly indented */}
+                                {/* Nested mobile dropdowns */}
                                 {item.dropdown && (
                                     <div className="pl-6 flex flex-col space-y-1 border-l-2 border-gray-100 ml-4 mt-1">
                                         {item.dropdown.map((dropItem, dropIndex) => (
@@ -172,18 +195,20 @@ const AsapNavigation: React.FC = () => {
                             </div>
                         ))}
 
-                        {/* Mobile CTAs */}
+                        {/* Mobile CTAs - Now Looped! */}
                         <div className="border-t border-gray-100 pt-4 mt-2 flex flex-col space-y-3">
-                            <Link href="/request-demo" className="text-center w-full px-6 py-3 text-sm font-semibold text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100">
-                                Request Demo
-                            </Link>
-                            <Link href="/login" className="text-center w-full px-6 py-3 text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100">
-                                Login
-                            </Link>
-                            <Link href="/signup" className="text-center w-full px-6 py-3 text-sm font-semibold text-white bg-blue-700 rounded-lg hover:bg-blue-800 shadow-sm">
-                                Sign Up
-                            </Link>
+                            {CTA_LINKS.map((cta, index) => (
+                                <Link 
+                                    key={index} 
+                                    href={cta.href} 
+                                    className={cta.mobileClasses}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    {cta.label}
+                                </Link>
+                            ))}
                         </div>
+
                     </div>
                 </div>
             )}
