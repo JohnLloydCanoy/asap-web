@@ -58,7 +58,7 @@ const NAV_LINKS: NavItem[] = [
 
 const CTA_LINKS: CtaItem[] = [
     { 
-        label: "Request Demo", 
+        label: "Demo", 
         href: "/request-demo", 
         desktopClasses: "text-blue-700 hover:text-blue-800 font-semibold text-sm",
         mobileClasses: "text-center w-full px-6 py-3 text-sm font-semibold text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100"
